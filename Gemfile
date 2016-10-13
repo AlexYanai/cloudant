@@ -1,4 +1,14 @@
 source 'https://rubygems.org'
 
-# Specify your gem's dependencies in cloudant.gemspec
+group :development do
+  gem 'pry'
+end
+
+group :test do
+  gem 'coveralls'
+  gem 'simplecov'
+  gem 'webmock'
+  gem 'rspec', '>= 3.0'
+end
+
 gemspec
