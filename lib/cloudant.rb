@@ -1,7 +1,6 @@
 require 'net/http'
 require 'json'
 require 'uri'
-require 'pry'
 require 'rest-client'
 
 require "cloudant/version"

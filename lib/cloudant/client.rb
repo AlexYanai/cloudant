@@ -35,6 +35,7 @@ module Cloudant
       @conn.query({url_path: "#{database}", opts: doc, method: :post})
     end
     alias_method :create, :create_doc
+    alias_method :post,   :create_doc
 
     # Returns an error hash if a valid id isn't given
     def update_doc(doc)
@@ -42,6 +43,7 @@ module Cloudant
 
       @conn.query({url_path: "#{database}/#{id}", opts: doc, method: :put})
     end
+    alias_method :put, :update_doc
 
     # Intended behavior for this method to accept only an id to delete a doc.
     # TODO: Add an optional param for rev.
@@ -51,6 +53,7 @@ module Cloudant
 
       @conn.query({url_path: "#{database}/#{id}?rev=#{rev}", method: :delete})
     end
+    alias_method :delete, :delete_doc
 
     # Convenience method: this is functionally equivalent to get_doc if
     # "/_design" is prepended to the id. 
