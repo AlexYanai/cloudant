@@ -9,7 +9,7 @@ group :test do
   gem 'coveralls'
   gem 'simplecov'
   gem 'webmock'
-  gem 'rspec', '>= 3.0'
+  gem 'rspec'
 end
 
 gemspec
