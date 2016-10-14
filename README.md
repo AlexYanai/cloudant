@@ -117,7 +117,7 @@ ddoc = {'language' => 'javascript', 'views' => {} }
 client.create_design_doc('test',ddoc)
 ```
 
-**Querying and Views**
+**[Querying](https://docs.cloudant.com/cloudant_query.html#finding-documents-using-an-index)**
 ```ruby
 # Perform a single query
 q = {'selector': {'test_field': {'$exists': true}},'fields': ['_id', '_rev'],'limit': 1,'skip': 0}
@@ -130,8 +130,7 @@ client.bookmark_query(q) do |docs|
 end
 ```
 
-[Querying](https://docs.cloudant.com/cloudant_query.html#finding-documents-using-an-index)
-
+**[Views](https://docs.cloudant.com/creating_views.html#using-views)**
 ```ruby
 # Creating a view
 client.create_view('test',{"current"=>{"reduce"=>"_count","map"=>"function (doc) {\n  if (doc.status === \"name\") {\n    emit(doc._id,1);\n  }\n}"}})
@@ -147,15 +146,12 @@ client.view(database,view_to_query, :reduce => false, :include_docs => true)
 # => {"total_rows"=>2, "offset"=>0, "rows"=>[{"id"=>"5d8e6c99198dfdde8accd8e019ba052", "key"=>"5d8e6c99198dfdde8accd8e019ba052", "value"=>1, "doc"=>{"_id"=>"5d8e6c99198dfdde8accd8e019ba052", "_rev"=>"1-7ebdb5b82e1cc4eaf2e27a711e9857c6", "a"=>10, "b"=>92, "c"=>31}}, {"id"=>"5d8e6c99898dcdd08accd8e019badab", "key"=>"5d8e6c99898dcdd0daccd8e019badab", "value"=>1, "doc"=>{"_id"=>"5d8e6c99898dcdd8daccd8e019badab", "_rev"=>"1-d36298f4391da575df61e170af2efa34", "b"=>12, "c"=>33}}]}
 ```
 
-For a full list of options, see [Using Views](https://docs.cloudant.com/creating_views.html#using-views)
-
 ## To Do
 - Add database replication functionality - `/_replicator`
 - Allow new user creation - `/_security`
 - Add more robust options handling for various queries (expanding the `QueryBuilder` module, as used in view querying)
     -   Currently, options have to be added to a query string by the user.
 - Add support for `attachments`   
-
 
 ## Contributing
 
