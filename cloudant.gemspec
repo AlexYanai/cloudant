@@ -9,8 +9,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Alex Yanai"]
   spec.email         = ["yanai.alex@gmail.com"]
 
-  spec.summary       = %q{Ruby wrapper to access a Cloudant instance.}
-  spec.description   = %q{A ruby interface to access a Cloudant database.}
+  spec.summary       = %q{Ruby interface to Cloudant's API.}
+  spec.description   = %q{A ruby interface to Cloudant's API.}
   spec.homepage      = "https://github.com/AlexYanai/cloudant"
   spec.license       = "MIT"
 
