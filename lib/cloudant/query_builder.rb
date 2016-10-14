@@ -23,6 +23,8 @@ module Cloudant
       def get_fields(type)
         if type == "view"
           return [:reduce,:include_docs,:descending,:endkey,:endkey_docid,:group,:group_level,:inclusive_end,:key,:keys,:limit,:skip,:stale,:startkey,:startkey_docid]
+        elsif type == "all_docs"
+          return [:descending,:endkey,:include_docs,:conflicts,:inclusive_end,:key,:limit,:skip,:startkey,:keys]
         end
       end
     end

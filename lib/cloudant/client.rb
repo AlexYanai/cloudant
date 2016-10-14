@@ -14,10 +14,9 @@ module Cloudant
     end
 
     # Retrieve all docs from the database
-    # Returns an array of hashes including ids, keys, and revs, unless :include_docs is passed
-    def all_docs(*include_docs)
+    def all_docs(*opts)
       q = "#{database}/_all_docs"
-      q << "?include_docs=true" if include_docs && include_docs.any? && include_docs.first == :include_docs
+      q << QueryBuilder.build(opts.first,"all_docs") if opts && opts.any? && opts.first.is_a?(Hash)
 
       @conn.query({url_path: q, method: :get})
     end

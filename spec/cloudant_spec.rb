@@ -67,7 +67,7 @@ describe 'Cloudant', type: :model do
     end
 
     it 'should get all docs in a db' do
-      response = @cloudant.all_docs(:include_docs)
+      response = @cloudant.all_docs({:include_docs => true})
       expect(response).to eq({"total_rows" => 1, "offset" => 0, "rows" => [{"ok"=>true, "_id"=>"4", "rev"=>"1-be74a68c2105f3d9d0245eb8736ca9f1", "Content"=>"some content"}]})
     end
   
