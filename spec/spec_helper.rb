@@ -15,7 +15,7 @@ RSpec.configure do |config|
     to_return(:status => 200, body: '{"couchdb":"Welcome","version":"1.0.2","cloudant_build":"2611"}', :headers => {})
 
     stub_request(:post, "https://test.cloudant.com/_session").
-      with(:headers   => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip, deflate', 'Content-Length'=>'89', 'Content-Type'=>'application/x-www-form-urlencoded', 'Host'=>"test.cloudant.com", 'User-Agent'=>'rest-client/2.0.0 (darwin15.3.0 x86_64) ruby/2.3.1p112'},
+      with(:headers   => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip, deflate', 'Content-Length'=>'89', 'Content-Type'=>'application/x-www-form-urlencoded', 'Host'=>"test.cloudant.com", 'User-Agent'=>/rest-client.+ruby\/\d{1}.\d{1}.\d{1}p\d{3}/},
            :body      => {"Accept"=>"*/*", "Content-Type"=>"application/x-www-form-urlencoded", "password"=>"test", "username"=>"test"}).
     to_return(:status => 200, :body => "{\"ok\":true}", :headers => {:x_couch_request_id=>"f35a80726e", :set_cookie=>["AuthSession=yWOGYbkliQXULjhSTrVgtue0HmAnoCfdJIEvMZxBKs1FDwzqRcpPaN_0eskojE; Version=1; Expires=Tue, 27-Sep-2016 06:35:33 GMT; Max-Age=86400; Path=/; HttpOnly; Secure"], :content_type=>"text/plain;charset=utf-8"})
 
