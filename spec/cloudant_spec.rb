@@ -154,17 +154,17 @@ describe 'Cloudant', type: :model do
 
   context 'query selectors' do
     it 'should send a single query and return the correct document or documents' do
-      response = @cloudant.query({"selector": {"test_field": {"$exists": true}},"fields": ["_id", "_rev"],"limit": 1,"skip": 0})
+      response = @cloudant.query({"selector" => {"test_field" => {"$exists" => true}},"fields" => ["_id", "_rev"],"limit" => 1,"skip" => 0})
       expect(response).to eq({"docs"=>[],"bookmark"=>"g2wAAAAOKCDavrUNZknSulczMbQ1tNBrdcIDPj1dZtpQIRlFBPAaT2XwBfQlrxokeHp0bAAAAAJuBAAAAACgbgQA____v2LCiAm_1qCeYAAAAGIAABVAag"})
     end
 
     it 'should return an error hash if an invalid query selector is sent' do
-      response = @cloudant.query({"selector": {"test_field": {"$existss": true}},"fields": ["_id", "_rev"],"limit": 1,"skip": 0})
+      response = @cloudant.query({"selector" => {"test_field" => {"$existss" => true}},"fields" => ["_id", "_rev"],"limit" => 1,"skip" => 0})
       expect(response).to eq({"error"=>"invalid_operator", "reason"=>"Invalid operator: $existss"})
     end
 
     it 'should perform paginated queries by passing a bookmark while querying' do
-      response = @cloudant.bookmark_query({"selector": {"test_field": {"$exists": false}},"fields": ["_id", "_rev"],"limit": 1,"skip": 0}) { |docs| docs }
+      response = @cloudant.bookmark_query({"selector" => {"test_field" => {"$exists" => false}},"fields" => ["_id", "_rev"],"limit" => 1,"skip" => 0}) { |docs| docs }
       expect(response).to eq([])
     end
   end
