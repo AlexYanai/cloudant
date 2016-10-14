@@ -89,8 +89,11 @@ module Cloudant
     end
 
     # Get a hash {"results" => []}, containing a hash of seq, id, changes
-    def changes
-      @conn.query({url_path: "#{database}/_changes", method: :get})
+    def changes(*opts)
+      q = "#{database}/_changes"
+      q << QueryBuilder.build(opts.first,"changes") if opts && opts.any? && opts.first.is_a?(Hash)
+
+      @conn.query({url_path: q, method: :get})
     end
 
     # Returns all database for the current instance of Cloudant

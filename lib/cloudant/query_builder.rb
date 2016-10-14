@@ -24,7 +24,9 @@ module Cloudant
         if type == "view"
           return [:reduce,:include_docs,:descending,:endkey,:endkey_docid,:group,:group_level,:inclusive_end,:key,:keys,:limit,:skip,:stale,:startkey,:startkey_docid]
         elsif type == "all_docs"
-          return [:descending,:endkey,:include_docs,:conflicts,:inclusive_end,:key,:limit,:skip,:startkey,:keys]
+          return [:include_docs,:descending,:endkey,:conflicts,:inclusive_end,:key,:limit,:skip,:startkey,:keys]
+        elsif type == "changes"
+          return [:include_docs,:descending,:feed,:filter,:heartbeat,:conflicts,:limit,:since,:style,:timeout,:doc_ids]
         end
       end
     end
