@@ -21,7 +21,7 @@ module Cloudant
 
       # TODO: This will be expanded to calls other than /_view.
       def get_fields(type)
-        if type == "view "
+        if type == "view"
           return [:reduce,:include_docs,:descending,:endkey,:endkey_docid,:group,:group_level,:inclusive_end,:key,:keys,:limit,:skip,:stale,:startkey,:startkey_docid]
         end
       end

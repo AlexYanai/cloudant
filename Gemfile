@@ -5,6 +5,7 @@ group :development do
 end
 
 group :test do
+  gem 'rake'
   gem 'coveralls'
   gem 'simplecov'
   gem 'webmock'
