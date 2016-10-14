@@ -1,6 +1,8 @@
 # Cloudant
 
 [![Build Status](https://travis-ci.org/AlexYanai/cloudant.svg?branch=master)](https://travis-ci.org/AlexYanai/cloudant)
+[![Coverage Status](https://coveralls.io/repos/github/AlexYanai/cloudant/badge.svg?branch=master)](https://coveralls.io/github/AlexYanai/cloudant?branch=master)
+[![License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat)](https://github.com/AlexYanai/cloudant/blob/master/LICENSE.txt)
 
 Ruby Cloudant is a simple Ruby interface for [IBM Cloudant's](https://cloudant.com/) API. Cloudant is a NoSQL database built on [CouchDB](http://couchdb.apache.org/).
 
