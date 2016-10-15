@@ -22,8 +22,11 @@ module Cloudant
     end
 
     # Accepts a single document id and returns it if found
-    def get_doc(id)
-      @conn.query({url_path: "#{database}/#{id}", method: :get})
+    def get_doc(id,*opts)
+      q = "#{database}/#{id}"
+      q << QueryBuilder.build(opts.first,"doc") if opts && opts.any? && opts.first.is_a?(Hash)
+
+      @conn.query({url_path: q, method: :get})
     end
     alias_method :get, :get_doc
     alias_method :doc, :get_doc
