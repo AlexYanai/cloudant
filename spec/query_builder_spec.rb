@@ -36,4 +36,11 @@ describe 'Cloudant::QueryBuilder' do
       expect(q).to eq("?include_docs=true&filter=true")
     end
   end
+
+  context 'doc' do
+    it 'doc should return the correct query string for a set of options' do
+      q = Cloudant::QueryBuilder.build({:local_seq => true, :latest => true},"doc")
+      expect(q).to eq("?local_seq=true&latest=true")
+    end
+  end
 end

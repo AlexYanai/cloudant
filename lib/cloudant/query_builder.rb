@@ -21,12 +21,15 @@ module Cloudant
 
       # TODO: This will be expanded to calls other than /_view.
       def get_fields(type)
-        if type == "view"
-          return [:reduce,:include_docs,:descending,:endkey,:endkey_docid,:group,:group_level,:inclusive_end,:key,:keys,:limit,:skip,:stale,:startkey,:startkey_docid]
-        elsif type == "all_docs"
-          return [:include_docs,:descending,:endkey,:conflicts,:inclusive_end,:key,:limit,:skip,:startkey,:keys]
-        elsif type == "changes"
-          return [:include_docs,:descending,:feed,:filter,:heartbeat,:conflicts,:limit,:since,:style,:timeout,:doc_ids]
+        case type
+          when "view"
+            return [:reduce,:include_docs,:descending,:endkey,:endkey_docid,:group,:group_level,:inclusive_end,:key,:keys,:limit,:skip,:stale,:startkey,:startkey_docid]  
+          when "all_docs"
+            return [:include_docs,:descending,:endkey,:conflicts,:inclusive_end,:key,:limit,:skip,:startkey,:keys]  
+          when "changes"
+            return [:include_docs,:descending,:feed,:filter,:heartbeat,:conflicts,:limit,:since,:style,:timeout,:doc_ids]  
+          when "doc"
+            return [:local_seq,:attachments,:att_encoding_info,:atts_since,:conflicts,:deleted_conflicts,:latest,:meta,:open_revs,:rev,:revs,:revs_info]  
         end
       end
     end

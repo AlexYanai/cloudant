@@ -6,7 +6,7 @@
 
 Ruby Cloudant is a simple Ruby interface for [IBM Cloudant's](https://cloudant.com/) API. Cloudant is a NoSQL database built on [CouchDB](http://couchdb.apache.org/).
 
-This gem is still in [development](##Contributing) and is a work in progress. 
+This gem is still in [development](#contributing) and is a work in progress. 
 
 ## Installation
 
@@ -102,7 +102,7 @@ client.update_docs(docs)
 # Deleting multiple docs
 client.delete_docs(docs)
 ```
-`:delete_docs` is a convenience method; deleting multiple documents at once is best performed by adding `['_deleted']` to each document and performing an update. [Bulk operations](https://docs.cloudant.com/document.html#bulk-operations)
+`:delete_docs` is a convenience method; this performs an update, adding `['_deleted']` to each document. [Bulk operations](https://docs.cloudant.com/document.html#bulk-operations)
 
 **Indices, Design Docs**
 ```ruby
@@ -147,6 +147,7 @@ client.view(database,view_to_query, :reduce => false, :include_docs => true)
 ```
 
 ## To Do
+
 - Add database replication functionality - `/_replicator`
 - Allow new user creation - `/_security`
 - Add more robust options handling for various queries (expanding the `QueryBuilder` module, as used in view querying)

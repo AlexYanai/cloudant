@@ -186,7 +186,7 @@ module Cloudant
     end
 
     # Paginate query results - best for large volume.
-    # TODO: add feature that allows users to view previous pages and generall move into own class.
+    # TODO: add feature that allows users to view previous pages and generally move into own class.
     def bookmark_query(q,&blk)
       response = query(q)
       bookmark = response["bookmark"]
