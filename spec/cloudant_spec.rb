@@ -2,11 +2,7 @@ require 'spec_helper'
 
 describe 'Cloudant', type: :model do
   before do
-    @username = "test"
-    @password = "test"
-    @database = "test"
-    @base_url = "https://#{@username}.cloudant.com/"
-    @cloudant = Cloudant::Client.new({username: @username, password: @password, database: @database})
+    @cloudant = Cloudant::Client.new({username: 'test', password: 'test', database: 'test'})
   end
 
   it 'has a version number' do
@@ -19,7 +15,7 @@ describe 'Cloudant', type: :model do
 
   context 'connection' do
     it 'should return a response' do
-      response = Net::HTTP.get(URI(@base_url))
+      response = Net::HTTP.get(URI("https://test.cloudant.com/"))
       expect(response).to be_a(String)
     end
 

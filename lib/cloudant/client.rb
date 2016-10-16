@@ -1,7 +1,8 @@
 module Cloudant
   class Client
-    attr_reader   :username, :password
+    include Cloudant::QueryBuilder
     attr_accessor :database, :base_uri
+    attr_reader   :username, :password
 
     def initialize(args)
       @username = args[:username]
@@ -16,7 +17,7 @@ module Cloudant
     # Retrieve all docs from the database
     def all_docs(*opts)
       q = "#{database}/_all_docs"
-      q << QueryBuilder.build(opts.first,"all_docs") if opts && opts.any? && opts.first.is_a?(Hash)
+      q << build_query_string(opts.first,"all_docs") if opts && opts.any? && opts.first.is_a?(Hash)
 
       @conn.query({url_path: q, method: :get})
     end
@@ -24,7 +25,7 @@ module Cloudant
     # Accepts a single document id and returns it if found
     def get_doc(id,*opts)
       q = "#{database}/#{id}"
-      q << QueryBuilder.build(opts.first,"doc") if opts && opts.any? && opts.first.is_a?(Hash)
+      q << build_query_string(opts.first,"doc") if opts && opts.any? && opts.first.is_a?(Hash)
 
       @conn.query({url_path: q, method: :get})
     end
@@ -94,7 +95,7 @@ module Cloudant
     # Get a hash {"results" => []}, containing a hash of seq, id, changes
     def changes(*opts)
       q = "#{database}/_changes"
-      q << QueryBuilder.build(opts.first,"changes") if opts && opts.any? && opts.first.is_a?(Hash)
+      q << build_query_string(opts.first,"changes") if opts && opts.any? && opts.first.is_a?(Hash)
 
       @conn.query({url_path: q, method: :get})
     end
@@ -163,7 +164,7 @@ module Cloudant
     # if it has one, or rows containing keys, ids, and values if not.
     def view(ddoc,view,*opts)
       q  = "#{database}/_design/#{ddoc}/_view/#{view}"
-      q << QueryBuilder.build(opts.first,"view") if opts && opts.any? && opts.first.is_a?(Hash)
+      q << build_query_string(opts.first,"view") if opts && opts.any? && opts.first.is_a?(Hash)
 
       @conn.query({url_path: q, method: :get})
     end
