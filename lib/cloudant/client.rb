@@ -1,6 +1,6 @@
 module Cloudant
   class Client
-    include Cloudant::QueryBuilder
+    include Cloudant::API
     attr_accessor :database, :base_uri
     attr_reader   :username, :password
 
