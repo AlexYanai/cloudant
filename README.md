@@ -75,7 +75,9 @@ response = client.create(doc)
 # Find a single document by id
 doc_id = response['id']
 client.doc(doc_id)
-
+# Options can also be passed along with the id (View Cloudant docs for a full list)
+client.doc(doc_id, :revs => true))
+    
 # Update a single document (requires an existing doc's id and current rev)
 new_doc = {'id'=>'1', 'rev'=>'1-bf74a68c2105f3d9d0245fc836ca9f3', 'field_two'=>'more content'}
 client.update(new_doc)
