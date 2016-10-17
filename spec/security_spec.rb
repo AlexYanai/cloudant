@@ -5,6 +5,20 @@ describe 'Cloudant::QueryBuilder' do
     @cloudant = Cloudant::Client.new({username: 'test', password: 'test', database: 'test'})
   end
 
+  context 'permissions' do
+    it 'should return permission information of the user currently logged in' do
+      response = @cloudant.permissions
+      expect(response).to eq({"ok"=>true, "info"=>{"authentication_db"=>"_users", "authentication_handlers"=>["cookie", "default"], "authenticated"=>"cookie"}, "userCtx"=>{"name"=>"test", "roles"=>["_admin", "_reader", "_writer"]}})
+    end
+  end
+
+  context 'roles' do
+    it 'should return permission information of the user currently logged in' do
+      response = @cloudant.roles
+      expect(response).to eq({})
+    end
+  end
+  
   context 'check_roles' do
     it 'returns nil for nil' do
       roles = Cloudant::Security.check_roles(nil)
