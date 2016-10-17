@@ -12,11 +12,6 @@ module Cloudant
       @conn.query({url_path: "_session", method: :get})
     end
 
-    # Returns {"password" => "str", "key" => "str", "ok" => true}
-    def create_api_keys
-      @conn.query({url_path: "_api/v2/api_keys", method: :post})
-    end
-
     # View existing user permissions in the database
     # Returns {"cloudant" => {"key" => ["_permission"]}}
     def roles
@@ -27,6 +22,11 @@ module Cloudant
     # Accepts a document: {"cloudant" => {"key" => ["_permission"]}} 
     def update_roles(doc)
       @conn.query({url_path: "_api/v2/db/#{database}/_security", opts: doc, method: :put})
+    end
+
+    # Returns {"password" => "str", "key" => "str", "ok" => true}
+    def create_api_keys
+      @conn.query({url_path: "_api/v2/api_keys", method: :post})
     end
 
     # Methd to create and authorize a new set of credentials.
@@ -52,6 +52,16 @@ module Cloudant
       end
 
       keys
+    end
+    
+    # Accepts a string - a key with permissions already existing in the database
+    # If the key isn't found within the database, no changes are made. 
+    def delete_user(user)
+      users    = roles
+      existing = users["cloudant"]
+      
+      existing.delete(user)
+      update_roles(users)
     end
 
     # Checks input array to make sure it contains only valid roles.
