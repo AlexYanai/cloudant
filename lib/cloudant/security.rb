@@ -1,5 +1,11 @@
 module Cloudant
   module Security
+    # The Security Module contains methods to read and modify existing users,
+    # permissions, and credentials. 
+    # The default credentials provided upon account creaton have _admin level
+    # access to all account databases; any subsequent users or API keys created
+    # must have permissions explicitly set.
+    #
     # View permissions for the current user
     # Can only be accessed after performing cookie auth
     def permissions
@@ -23,23 +29,35 @@ module Cloudant
       @conn.query({url_path: "_api/v2/db/#{database}/_security", opts: doc, method: :put})
     end
 
+    # Methd to create and authorize a new set of credentials.
+    # :new_user accepts and array of either symbols or hashes, corresponding to the roles
+    # available in Cloudant as see in all_roles below.
+    # Returns the credentials and roles {"password" => "str", "key" => "str", "ok" => true, "roles": []}
     def new_user(user_roles)
-      users   = roles
-      keys    = create_api_keys
       checked = Security.check_roles(user_roles)
 
       if checked
+        users = roles
+        keys  = create_api_keys
+
         existing_users    = users["cloudant"]
         users["cloudant"] = {} unless existing_users # If no users exist a blank has is returned instead of {"cloudant": {}}
 
         users["cloudant"][keys["key"]] = checked
         keys["roles"] = checked
+        
+        update_roles(users)
+      else
+        raise ArgumentError.new('invalid - permitted roles: reader, writer, admin, replicator, db_updates, design, shards, security')
       end
 
-      update_roles(users)
       keys
     end
 
+    # Checks input array to make sure it contains only valid roles.
+    # Any invalid roles will be removed. If there are a mix of valid and invalid
+    # roles in the array, the new user will be created with only the valid roles.
+    # If the input is empty, or no valid roles are present, no user will be created.
     def self.check_roles(roles)
       all_roles = ["_reader","_writer","_admin","_replicator","_db_updates","_design","_shards","_security"]
       validated = []
