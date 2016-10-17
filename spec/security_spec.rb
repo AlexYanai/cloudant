@@ -15,7 +15,28 @@ describe 'Cloudant::QueryBuilder' do
   context 'roles' do
     it 'should return permission information of the user currently logged in' do
       response = @cloudant.roles
-      expect(response).to eq({})
+      expect(response).to eq({"cloudant"=>{"test_user"=>["_reader"]}})
+    end
+  end
+
+  context 'update_roles' do
+    it 'should return permission information of the user currently logged in' do
+      response = @cloudant.update_roles({"cloudant": {"new_user": ["_reader"]}})
+      expect(response).to eq({"ok"=>true})
+    end
+  end
+
+  context 'new_user' do
+    it 'should return permission information of the user currently logged in' do
+      response = @cloudant.new_user(["_reader"])
+      expect(response).to eq({"password"=>"some_generated_password", "ok"=>true, "key"=>"some_generated_key", "roles"=>["_reader"]})
+    end
+  end
+
+  context 'delete_user' do
+    it 'should return permission information of the user currently logged in' do
+      response = @cloudant.delete_user("test_user")
+      expect(response).to eq({"ok"=>true})
     end
   end
   

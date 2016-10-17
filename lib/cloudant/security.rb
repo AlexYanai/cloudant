@@ -60,7 +60,7 @@ module Cloudant
       users    = roles
       existing = users["cloudant"]
       
-      existing.delete(user)
+      existing.delete(user) if existing
       update_roles(users)
     end
 
