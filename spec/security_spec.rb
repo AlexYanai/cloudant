@@ -21,7 +21,7 @@ describe 'Cloudant::QueryBuilder' do
 
   context 'update_roles' do
     it 'should return permission information of the user currently logged in' do
-      response = @cloudant.update_roles({"cloudant": {"new_user": ["_reader"]}})
+      response = @cloudant.update_roles({"cloudant" => {"new_user" => ["_reader"]}})
       expect(response).to eq({"ok"=>true})
     end
   end
