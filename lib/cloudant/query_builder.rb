@@ -7,10 +7,9 @@ module Cloudant
       fields    = get_fields(type)
 
       fields.each do |field|
-        key = field
         val = opts[field].to_s
 
-        current = "#{key}=#{val}"   if val != ""
+        current = "#{field}=#{val}" if val != ""
         query_str << "&" << current if (query_str != "" && current)
         query_str << "?" << current if (query_str == "" && current)
       end
@@ -18,7 +17,6 @@ module Cloudant
       query_str
     end
 
-    # TODO: This will be expanded to calls other than /_view.
     def get_fields(type)
       case type
         when "view"

@@ -160,7 +160,13 @@ client.roles
 client.create_api_keys
 
 # Create a new user and assign it one or more permissions
-client.new_user(["reader", "writer"])
+# Will return the credentials of the newly created user as well
+client.new_user(["reader", "writer"]) 
+# => {"password" => "str", "key" => "str", "ok" => true, "roles": ["_reader","_writer"]}
+
+# Delete an existing user
+username = "test_user"
+client.delete_user(username)
 ```
 
 ## To Do
