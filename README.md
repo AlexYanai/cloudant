@@ -119,7 +119,7 @@ ddoc = {'language' => 'javascript', 'views' => {} }
 client.create_design_doc('test',ddoc)
 ```
 
-**[Querying](https://docs.cloudant.com/cloudant_query.html#finding-documents-using-an-index)**
+**[Querying](https://docs.cloudant.com/cloudant_query.html#finding-documents-using-an-index)** a database
 ```ruby
 # Perform a single query
 q = {'selector': {'test_field': {'$exists': true}},'fields': ['_id', '_rev'],'limit': 1,'skip': 0}
@@ -132,19 +132,19 @@ client.bookmark_query(q) do |docs|
 end
 ```
 
-**[Views](https://docs.cloudant.com/creating_views.html#using-views)**
+**[Views (MapReduce)](https://docs.cloudant.com/creating_views.html#using-views)**
 ```ruby
 # Creating a view
 client.create_view('test',{"current"=>{"reduce"=>"_count","map"=>"function (doc) {\n  if (doc.status === \"name\") {\n    emit(doc._id,1);\n  }\n}"}})
 
 # Querying an existing view
 database = 'test'
-view_to_query = 'current'
+view_name = 'current'
 
-client.view(database,view_to_query) # If a reduce function is given will return a 'rows' array with a single record, the value of the reduce
+client.view(database,view_name) # If a reduce function is given will return a 'rows' array with a single record, the value of the reduce
 # => {"rows"=>[{"key"=>nil, "value"=>2}]} 
 
-client.view(database,view_to_query, :reduce => false, :include_docs => true)
+client.view(database,view_name, :reduce => false, :include_docs => true)
 # => {"total_rows"=>2, "offset"=>0, "rows"=>[{"id"=>"5d8e6c99198dfdde8accd8e019ba052", "key"=>"5d8e6c99198dfdde8accd8e019ba052", "value"=>1, "doc"=>{"_id"=>"5d8e6c99198dfdde8accd8e019ba052", "_rev"=>"1-7ebdb5b82e1cc4eaf2e27a711e9857c6", "a"=>10, "b"=>92, "c"=>31}}, {"id"=>"5d8e6c99898dcdd08accd8e019badab", "key"=>"5d8e6c99898dcdd0daccd8e019badab", "value"=>1, "doc"=>{"_id"=>"5d8e6c99898dcdd8daccd8e019badab", "_rev"=>"1-d36298f4391da575df61e170af2efa34", "b"=>12, "c"=>33}}]}
 ```
 
