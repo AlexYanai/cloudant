@@ -6,6 +6,7 @@ require 'rest-client'
 require "cloudant/version"
 require "cloudant/query_builder"
 require "cloudant/security"
+require "cloudant/replicator"
 require "cloudant/api"
 require "cloudant/client"
 require "cloudant/connection"
