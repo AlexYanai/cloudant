@@ -195,13 +195,18 @@ RSpec.configure do |config|
     to_return(:status => 200, :body => "{\"ok\":true}", :headers => {})
 
     stub_request(:put, "http://test.cloudant.com/_api/v2/db/test/_security").
-      with(:headers   => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Content-Type'=>'application/json', 'Cookie'=>'AuthSession=yWOGYbkliQXULjhSTrVgtue0HmAnoCfdJIEvMZxBKs1FDwzqRcpPaN_0eskojE; Version=1; Expires=Tue, 27-Sep-2016 06:35:33 GMT; Max-Age=86400; Path=/; HttpOnly; Secure', 'User-Agent'=>'Ruby'},
+      with(:headers   => {'Accept'=>'*/*', 'Content-Type'=>'application/json', 'Cookie'=>'AuthSession=yWOGYbkliQXULjhSTrVgtue0HmAnoCfdJIEvMZxBKs1FDwzqRcpPaN_0eskojE; Version=1; Expires=Tue, 27-Sep-2016 06:35:33 GMT; Max-Age=86400; Path=/; HttpOnly; Secure'},
            :body      => "{\"cloudant\":{\"test_user\":[\"_reader\"],\"some_generated_key\":[\"_reader\"]}}").
     to_return(:status => 200, :body => "{\"password\":\"some_generated_password\",\"ok\":true,\"key\":\"some_generated_key\",\"roles\":[\"_reader\"]}", :headers => {})
 
     stub_request(:put, "http://test.cloudant.com/_api/v2/db/test/_security").
-      with(:headers   => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Content-Type'=>'application/json', 'Cookie'=>'AuthSession=yWOGYbkliQXULjhSTrVgtue0HmAnoCfdJIEvMZxBKs1FDwzqRcpPaN_0eskojE; Version=1; Expires=Tue, 27-Sep-2016 06:35:33 GMT; Max-Age=86400; Path=/; HttpOnly; Secure', 'User-Agent'=>'Ruby'},
+      with(:headers   => {'Accept'=>'*/*', 'Content-Type'=>'application/json', 'Cookie'=>'AuthSession=yWOGYbkliQXULjhSTrVgtue0HmAnoCfdJIEvMZxBKs1FDwzqRcpPaN_0eskojE; Version=1; Expires=Tue, 27-Sep-2016 06:35:33 GMT; Max-Age=86400; Path=/; HttpOnly; Secure'},
            :body      => "{\"cloudant\":{}}").
     to_return(:status => 200, :body => "{\"ok\":true}", :headers => {})
+
+    stub_request(:get, "http://test.cloudant.com/_active_tasks").
+      with(:headers => {'Accept'=>'*/*', 'Content-Type'=>'application/json', 'Cookie'=>'AuthSession=yWOGYbkliQXULjhSTrVgtue0HmAnoCfdJIEvMZxBKs1FDwzqRcpPaN_0eskojE; Version=1; Expires=Tue, 27-Sep-2016 06:35:33 GMT; Max-Age=86400; Path=/; HttpOnly; Secure'},
+           :body => "{\"Cookie\":\"AuthSession=yWOGYbkliQXULjhSTrVgtue0HmAnoCfdJIEvMZxBKs1FDwzqRcpPaN_0eskojE; Version=1; Expires=Tue, 27-Sep-2016 06:35:33 GMT; Max-Age=86400; Path=/; HttpOnly; Secure\"}").
+      to_return(:status => 200, :body => "[]", :headers => {})
   end
 end
