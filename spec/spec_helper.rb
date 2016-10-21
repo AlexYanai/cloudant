@@ -205,8 +205,18 @@ RSpec.configure do |config|
     to_return(:status => 200, :body => "{\"ok\":true}", :headers => {})
 
     stub_request(:get, "http://test.cloudant.com/_active_tasks").
-      with(:headers => {'Accept'=>'*/*', 'Content-Type'=>'application/json', 'Cookie'=>'AuthSession=yWOGYbkliQXULjhSTrVgtue0HmAnoCfdJIEvMZxBKs1FDwzqRcpPaN_0eskojE; Version=1; Expires=Tue, 27-Sep-2016 06:35:33 GMT; Max-Age=86400; Path=/; HttpOnly; Secure'},
-           :body => "{\"Cookie\":\"AuthSession=yWOGYbkliQXULjhSTrVgtue0HmAnoCfdJIEvMZxBKs1FDwzqRcpPaN_0eskojE; Version=1; Expires=Tue, 27-Sep-2016 06:35:33 GMT; Max-Age=86400; Path=/; HttpOnly; Secure\"}").
-      to_return(:status => 200, :body => "[]", :headers => {})
+      with(:headers   => {'Accept'=>'*/*', 'Content-Type'=>'application/json', 'Cookie'=>'AuthSession=yWOGYbkliQXULjhSTrVgtue0HmAnoCfdJIEvMZxBKs1FDwzqRcpPaN_0eskojE; Version=1; Expires=Tue, 27-Sep-2016 06:35:33 GMT; Max-Age=86400; Path=/; HttpOnly; Secure'},
+           :body      => "{\"type\":\"replication\"}").
+    to_return(:status => 200, :body => "[]", :headers => {})
+
+    stub_request(:put, /http:\/\/test.cloudant.com\/_replicator\/test_to_test_2_\d+{4}_\d+{2}_\d+{2}_\d+{2}_\d+{2}_\d+{2}/).
+      with(:headers   => {'Accept'=>'*/*', 'Content-Type'=>'application/json', 'Cookie'=>'AuthSession=yWOGYbkliQXULjhSTrVgtue0HmAnoCfdJIEvMZxBKs1FDwzqRcpPaN_0eskojE; Version=1; Expires=Tue, 27-Sep-2016 06:35:33 GMT; Max-Age=86400; Path=/; HttpOnly; Secure'},
+           :body      => "{\"source\":\"https://test:test@test.cloudant.com/test\",\"target\":\"https://test:test@test.cloudant.com/test_2\",\"create_target\":true,\"continuous\":true}").
+    to_return(:status => 200, :body => "{\"ok\":true,\"id\":\"replication-doc\",\"rev\":\"1-42a5c21c2b57130d7e7d20f7169rf6\"}", :headers => {})
+
+    stub_request(:put, /http:\/\/test.cloudant.com\/_replicator\/test_to_test_2_\d+{4}_\d+{2}_\d+{2}_\d+{2}_\d+{2}_\d+{2}/).
+      with(:headers   => {'Accept'=>'*/*', 'Content-Type'=>'application/json', 'Cookie'=>'AuthSession=yWOGYbkliQXULjhSTrVgtue0HmAnoCfdJIEvMZxBKs1FDwzqRcpPaN_0eskojE; Version=1; Expires=Tue, 27-Sep-2016 06:35:33 GMT; Max-Age=86400; Path=/; HttpOnly; Secure'},
+           :body      => "{\"source\":\"https://test:test@test.cloudant.com/test\",\"target\":\"https://test:test@test.cloudant.com/test_2\",\"create_target\":true,\"continuous\":false}").
+    to_return(:status => 200, :body => "{\"ok\":true,\"id\":\"replication-doc\",\"rev\":\"1-42a5c21c2b57130d7e7d20f7169rf6\"}", :headers => {})
   end
 end

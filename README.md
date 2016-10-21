@@ -169,9 +169,21 @@ username = "test_user"
 client.delete_user(username)
 ```
 
+**Database Replication and Sync)**
+```ruby
+# View Active tasks (including replications)
+client.active_tasks
+
+# Replicate a database
+client.replicate_db("test_2")
+
+# Sync a database
+client.replicate_db("test_2", :sync => true)
+```
+
 ## To Do
 
-- Add database replication functionality - `/_replicator`
+- Expand database replication functionality - `/_replicator`
 - Add more robust options handling for various queries (expanding the `QueryBuilder` module, as used in view querying)
     -   Currently, options have to be added to a query string by the user.
 - Add support for `attachments`   

@@ -4,6 +4,7 @@ require 'uri'
 require 'rest-client'
 
 require "cloudant/version"
+require "cloudant/utility"
 require "cloudant/query_builder"
 require "cloudant/security"
 require "cloudant/replicator"
