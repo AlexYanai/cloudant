@@ -11,10 +11,10 @@ module Cloudant
       continuous = false
       continuous = true if opts && opts[0] && opts[0][:sync]
       doc = {
-        "source": "https://#{username}:#{password}@#{username}.cloudant.com/#{database}",
-        "target": "https://#{username}:#{password}@#{username}.cloudant.com/#{target}",
-        "create_target": true,
-        "continuous": continuous
+        "source" => "https://#{username}:#{password}@#{username}.cloudant.com/#{database}",
+        "target" => "https://#{username}:#{password}@#{username}.cloudant.com/#{target}",
+        "create_target" => true,
+        "continuous" => continuous
       }
       doc_name = Cloudant::Utility.generate_doc_name(database,target)
 
