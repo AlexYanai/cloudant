@@ -135,7 +135,7 @@ end
 **[Views (MapReduce)](https://docs.cloudant.com/creating_views.html#using-views)**
 ```ruby
 # Creating a view
-client.create_view('test',{"current"=>{"reduce"=>"_count","map"=>"function (doc) {\n  if (doc.status === \"name\") {\n    emit(doc._id,1);\n  }\n}"}})
+client.create_view('test',{"current"=>{"reduce"=>"_count","map"=>"function (doc) {\n  if (doc.field_type === \"name\") {\n    emit(doc._id,1);\n  }\n}"}})
 
 # Querying an existing view
 database = 'test'
@@ -189,10 +189,10 @@ client.sync("test_2")
 
 ## To Do
 
+- Add support for `attachments`
 - Expand database replication functionality - `/_replicator`
 - Add more robust options handling for various queries (expanding the `QueryBuilder` module, as used in view querying)
     -   Currently, options have to be added to a query string by the user.
-- Add support for `attachments`   
 
 ## Contributing
 
