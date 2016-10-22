@@ -175,10 +175,16 @@ client.delete_user(username)
 client.active_tasks
 
 # Replicate a database
+# The default options are {:create_target => true, :continuous => false}, meaning that
+# the first argument provided will be the name of the target database, and it will be
+# newly created. If the database already exists, set :continuous => false
 client.replicate_db("test_2")
 
-# Sync a database
-client.replicate_db("test_2", :sync => true)
+# More options can be passed, for example: 
+client.replicate_db("test_2", {:continuous => true, :user_ctx => {"name" => "test_user", "roles" => ["admin"]}})
+
+# Sync a database (replicate a database with :continuous => true)
+client.sync("test_2")
 ```
 
 ## To Do
