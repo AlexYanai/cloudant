@@ -185,12 +185,14 @@ client.replicate_db("test_2", {:continuous => true, :user_ctx => {"name" => "tes
 
 # Sync a database (replicate a database with :continuous => true)
 client.sync("test_2")
+
+# To stop a replication, delete the replication doc as you would any other document
+client.delete_doc(doc_id)
 ```
 
 ## To Do
 
 - Add support for `attachments`
-- Expand database replication functionality - `/_replicator`
 - Add more robust options handling for various queries (expanding the `QueryBuilder` module, as used in view querying)
     -   Currently, options have to be added to a query string by the user.
 
