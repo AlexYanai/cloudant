@@ -7,6 +7,8 @@ module Cloudant
       @conn.query({url_path: "_active_tasks", opts: {"type" => type}, method: :get})
     end
 
+    # Accepts a string, the name of a database towards which to replicate the database. and 
+    # optionally a hash of options for creating the replication doc.
     def replicate_db(target,*opts)
       opts && opts[0] ? options = opts[0] : options = {}
 
@@ -16,10 +18,13 @@ module Cloudant
       @conn.query({url_path: "_replicator/#{doc_name}", opts: replication_doc, method: :put})
     end
 
+    # Sets the database to repliacte the 2 databases continuously.
     def sync(target)
       replicate_db(target,{:continuous => true, :create_target => true})
     end
 
+    # The default options assume that the target database does not exist and the replication
+    # will be one-time only.
     def build_doc(opts)
       fields = [:continuous,:create_target,:doc_ids,:filter,:proxy,:selector,:since_seq,:use_checkpoints,:user_ctx]
 
