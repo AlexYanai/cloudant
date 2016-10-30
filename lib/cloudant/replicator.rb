@@ -11,18 +11,17 @@ module Cloudant
     # optionally a hash of options for creating the replication doc.
     def replicate_db(target,*opts)
       opts && opts[0] ? options = opts[0] : options = {}
-      options[:target] = target
       options[:source] = database
+      options[:target] = target
       
       replication(options)
     end
 
-    # Accepts a string, the name of a database towards which to replicate the database. and 
-    # optionally a hash of options for creating the replication doc.
+    # Allows database replication between 2 databses instead of defaulting to the set database.
     def replicate_dbs(source,target,*opts)
       opts && opts[0] ? options = opts[0] : options = {}
-      options[:target] = target
       options[:source] = source
+      options[:target] = target
       
       replication(options)
     end
@@ -32,13 +31,21 @@ module Cloudant
       replicate_db(target,{:continuous => true, :create_target => true})
     end
 
+    # Method accepts options for replication document and builds query
+    def replication(args)
+      replication_doc = build_doc(args)
+
+      doc_name = Cloudant::Utility.generate_doc_name(args[:source],args[:target])
+      @conn.query({url_path: "_replicator/#{doc_name}", opts: replication_doc, method: :put})
+    end
+
     # The default options assume that the target database does not exist and the replication
     # will be one-time only.
     def build_doc(opts)
       fields = [:continuous,:create_target,:doc_ids,:filter,:proxy,:selector,:since_seq,:use_checkpoints,:user_ctx]
 
       replication_doc = {
-        :source        => "https://#{username}:#{password}@#{username}.cloudant.com/#{database}",
+        :source        => "https://#{username}:#{password}@#{username}.cloudant.com/#{opts[:source]}",
         :target        => "https://#{username}:#{password}@#{username}.cloudant.com/#{opts[:target]}",
         :create_target => true,
         :continuous    => false
@@ -50,13 +57,6 @@ module Cloudant
       end    
 
       replication_doc
-    end
-
-    def replication(args)
-      replication_doc = build_doc(args)
-
-      doc_name = Cloudant::Utility.generate_doc_name(args[:source],args[:target])
-      @conn.query({url_path: "_replicator/#{doc_name}", opts: replication_doc, method: :put})
     end
   end
 end
