@@ -195,6 +195,7 @@ client.delete_doc(doc_id)
 
 **Attachments**
 ```ruby
+# Type refers to the MIME type of the attachment.
 args = {
   :id   => "test_doc",
   :name => "test_attachment",
