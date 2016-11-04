@@ -183,6 +183,9 @@ client.replicate_db("test_2")
 # More options can be passed, for example: 
 client.replicate_db("test_2", {:continuous => true, :user_ctx => {"name" => "test_user", "roles" => ["admin"]}})
 
+# Replication defualts to the datbase initially set; a different source can be used by calling :replicate_dbs
+client.replicate_dbs("test_2", "test_3", {:continuous => true, :user_ctx => {"name" => "test_user", "roles" => ["admin"]}})
+
 # Sync a database (replicate a database with :continuous => true)
 client.sync("test_2")
 

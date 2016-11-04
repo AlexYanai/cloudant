@@ -140,8 +140,8 @@ module Cloudant
       
       args[:index] ? new_index["index"] = args[:index] : new_index["index"] = {}
       
-      new_index["name"]  = args[:name] if args[:name]
-      new_index["ddoc"]  = args[:ddoc] if args[:ddoc]
+      new_index["name"] = args[:name] if args[:name]
+      new_index["ddoc"] = args[:ddoc] if args[:ddoc]
 
       args[:type] ? new_index["type"] = args[:type] : new_index["type"] = "text"
 
