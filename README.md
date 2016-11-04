@@ -195,7 +195,7 @@ client.delete_doc(doc_id)
 
 ## To Do
 
-- Add support for `attachments`
+- Expand support for `attachments`
 - Add more robust options handling for various queries (expanding the `QueryBuilder` module, as used in view querying)
     -   Currently, options have to be added to a query string by the user.
 
