@@ -223,5 +223,25 @@ RSpec.configure do |config|
       with(:headers   => {'Accept'=>'*/*', 'Content-Type'=>'application/json', 'Cookie'=>'AuthSession=yWOGYbkliQXULjhSTrVgtue0HmAnoCfdJIEvMZxBKs1FDwzqRcpPaN_0eskojE; Version=1; Expires=Tue, 27-Sep-2016 06:35:33 GMT; Max-Age=86400; Path=/; HttpOnly; Secure'},
            :body      => "{\"source\":\"https://test:test@test.cloudant.com/test_1\",\"target\":\"https://test:test@test.cloudant.com/test_2\",\"create_target\":true,\"continuous\":true}").
     to_return(:status => 200, :body => "{\"ok\":true,\"id\":\"replication-doc\",\"rev\":\"1-42a5c21c2b57130d7e7d20f7169rf6\"}", :headers => {})
+
+    stub_request(:put, "http://test.cloudant.com/test/test_doc/test_attachment?rev=1-f53050cbc4e66a4dcf6db59a9e0bc6b").
+      with(:headers   => {'Accept'=>'*/*', 'Content-Type'=>'application/json', 'Cookie'=>'AuthSession=yWOGYbkliQXULjhSTrVgtue0HmAnoCfdJIEvMZxBKs1FDwzqRcpPaN_0eskojE; Version=1; Expires=Tue, 27-Sep-2016 06:35:33 GMT; Max-Age=86400; Path=/; HttpOnly; Secure'},
+           :body      => "{\"_id\":\"test_doc\",\"_attachments\":{\"test_attachment\":{\"content_type\":\"text/html\",\"data\":\"<html>\\n  <head>\\n    <h1>Test Doc</h1>\\n  </head>\\n  <body>\\n    <p>Test Content</p>\\n  </body>\\n</html>\"}}}").
+    to_return(:status => 200, :body => "{\"id\":\"test_doc\",\"ok\":true,\"rev\":\"2-147bc19a1bfd9bfdaf5ee6e2e05be74\"}", :headers => {})
+    
+    stub_request(:get, "http://test.cloudant.com/test/test_doc").
+      with(:headers   => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Content-Type'=>'application/json', 'Cookie'=>'AuthSession=yWOGYbkliQXULjhSTrVgtue0HmAnoCfdJIEvMZxBKs1FDwzqRcpPaN_0eskojE; Version=1; Expires=Tue, 27-Sep-2016 06:35:33 GMT; Max-Age=86400; Path=/; HttpOnly; Secure', 'User-Agent'=>'Ruby'},
+           :body      => "{\"Cookie\":\"AuthSession=yWOGYbkliQXULjhSTrVgtue0HmAnoCfdJIEvMZxBKs1FDwzqRcpPaN_0eskojE; Version=1; Expires=Tue, 27-Sep-2016 06:35:33 GMT; Max-Age=86400; Path=/; HttpOnly; Secure\"}").
+    to_return(:status => 200, :body => "{\"ok\":true,\"_id\":\"test_doc\",\"_rev\":\"1-f53050cbc4e66a4dcf6db59a9e0bc6b\", \"Content\":\"some content\"}", :headers => {})
+  
+    stub_request(:get, "http://test.cloudant.com/test/test_doc/test_attachment").
+      with(:headers   => {'Accept'=>'*/*', 'Content-Type'=>'application/json', 'Cookie'=>'AuthSession=yWOGYbkliQXULjhSTrVgtue0HmAnoCfdJIEvMZxBKs1FDwzqRcpPaN_0eskojE; Version=1; Expires=Tue, 27-Sep-2016 06:35:33 GMT; Max-Age=86400; Path=/; HttpOnly; Secure'},
+           :body      => "{\"Cookie\":\"AuthSession=yWOGYbkliQXULjhSTrVgtue0HmAnoCfdJIEvMZxBKs1FDwzqRcpPaN_0eskojE; Version=1; Expires=Tue, 27-Sep-2016 06:35:33 GMT; Max-Age=86400; Path=/; HttpOnly; Secure\"}").
+    to_return(:status => 200, :body => "{\"_id\":\"test_doc\",\"_attachments\":{\"test_attachment\":{\"content_type\":\"text/html\",\"data\":\"<html>\\n  <head>\\n    <h1>Test Doc</h1>\\n  </head>\\n  <body>\\n    <p>Test Content</p>\\n  </body>\\n</html>\"}}}", :headers => {})
+  
+    stub_request(:delete, "http://test.cloudant.com/test/test_doc/test_attachment?rev=3-292b06ac095434c81174d7bae5c5d4e").
+      with(:headers   => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Content-Type'=>'application/json', 'Cookie'=>'AuthSession=yWOGYbkliQXULjhSTrVgtue0HmAnoCfdJIEvMZxBKs1FDwzqRcpPaN_0eskojE; Version=1; Expires=Tue, 27-Sep-2016 06:35:33 GMT; Max-Age=86400; Path=/; HttpOnly; Secure', 'User-Agent'=>'Ruby'},
+           :body      => "{\"Cookie\":\"AuthSession=yWOGYbkliQXULjhSTrVgtue0HmAnoCfdJIEvMZxBKs1FDwzqRcpPaN_0eskojE; Version=1; Expires=Tue, 27-Sep-2016 06:35:33 GMT; Max-Age=86400; Path=/; HttpOnly; Secure\"}").
+    to_return(:status => 200, :body => "{\"ok\":true,\"id\":\"test_doc\",\"rev\":\"3-292b06ac095434c81174d7bae5c5d4e\"}", :headers => {})
   end
 end

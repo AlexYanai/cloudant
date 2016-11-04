@@ -169,7 +169,7 @@ username = "test_user"
 client.delete_user(username)
 ```
 
-**Database Replication and Sync)**
+**Database Replication and Sync**
 ```ruby
 # View Active tasks (including replications)
 client.active_tasks
@@ -193,11 +193,32 @@ client.sync("test_2")
 client.delete_doc(doc_id)
 ```
 
+**Attachments**
+```ruby
+args = {
+  :id   => "test_doc",
+  :name => "test_attachment",
+  :type => "text/html",
+  :rev  => "1-f53050cbc4e66a4dcf6db59a9e0bc6b",
+  :path => "./test.html"
+}
+
+# Create an attachment on an existing document. If no rev is given, a call will be made to get the document and extract the rev.
+client.create_attachment(args)
+client.update_attachment(args) # Alias of :create_attachment
+
+# Get the attachments associated with a document. The :name field is the name of the attachment to be retrieved.
+client.read_attachment(:id => "test_doc", :name => "test_attachment")
+
+# Delete an attachment. The current rev is required.
+client.delete_attachment(:id => "test_doc", :name => "test_attachment", :rev => "2-b52037c9456d75e05f718c1286d63bf6")
+```
+
 ## To Do
 
-- Add support for `attachments`
 - Add more robust options handling for various queries (expanding the `QueryBuilder` module, as used in view querying)
-    -   Currently, options have to be added to a query string by the user.
+  - Currently, options have to be added to a query string by the user.
+- Expand the `Replication` module.
 
 ## Contributing
 

@@ -32,6 +32,11 @@ module Cloudant
     alias_method :get, :get_doc
     alias_method :doc, :get_doc
 
+    def get_current_rev(doc)
+      retrieved = get_doc(doc)
+      retrieved["_rev"]
+    end
+
     # A valid doc must be provided. The doc must be a hash that can.
     # Use create_docs to create multiple documents at once.
     def create_doc(doc)

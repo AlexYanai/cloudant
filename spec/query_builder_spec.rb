@@ -47,4 +47,16 @@ describe 'Cloudant::QueryBuilder' do
       expect(q).to eq("?local_seq=true&latest=true")
     end
   end
+
+  context 'build_attachment_query' do
+    it "should create an attachment url string" do
+      q = @cloudant.build_attachment_query({:id => "doc_name", :name => "attachment_name", :rev => "1-f53050cbc4e66a4dcf6db59a9e0bc6b"})
+      expect(q).to eq("test/doc_name/attachment_name?rev=1-f53050cbc4e66a4dcf6db59a9e0bc6b")
+    end
+
+    it "should create an attachment url string without a rev" do
+      q = @cloudant.build_attachment_query({:id => "doc_name", :name => "attachment_name"})
+      expect(q).to eq("test/doc_name/attachment_name")
+    end
+  end
 end

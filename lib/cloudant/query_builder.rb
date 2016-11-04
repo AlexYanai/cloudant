@@ -29,5 +29,15 @@ module Cloudant
           return [:local_seq,:attachments,:att_encoding_info,:atts_since,:conflicts,:deleted_conflicts,:latest,:meta,:open_revs,:rev,:revs,:revs_info]  
       end
     end
+
+    # Built the query string for attachments
+    def build_attachment_query(args)
+      q = ""
+      q << "#{database}"
+      q << "/#{args[:id]}"
+      q << "/#{args[:name]}"
+      q << "?rev=#{args[:rev]}" if args[:rev]
+      q
+    end
   end
 end

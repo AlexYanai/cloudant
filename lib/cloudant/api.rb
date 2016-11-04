@@ -4,5 +4,6 @@ module Cloudant
     include Cloudant::QueryBuilder
     include Cloudant::Security
     include Cloudant::Replicator
+    include Cloudant::Attachment
   end
 end
