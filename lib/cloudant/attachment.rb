@@ -7,10 +7,20 @@ module Cloudant
     # file type.
     # Returns attachment to be uploaded
     def self.create_attachment(args)
+      p  File.dirname(__FILE__)
       doc_name   = args[:doc]
+      p "args[:doc]"
+      p args[:doc]
       file_name  = args[:name]
+      p "args[:name]"
+      p args[:name]
       file_type  = args[:type]
+      p "args[:type]"
+      p args[:type]
       file_path  = args[:path]
+      p "args[:path]"
+      p args[:path]
+
       attachment = {
         "_id" => doc_name,
         "_attachments" => {
@@ -22,6 +32,8 @@ module Cloudant
 
       if File.exists?(file_path)
         data = File.open(file_path,'rb').read
+        p "data"
+        p data
         attachment["_attachments"][file_name]["data"] = data
       else
         raise ArgumentError.new('file does not exist')
