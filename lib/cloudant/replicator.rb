@@ -1,6 +1,9 @@
 module Cloudant
   module Replicator
-    # The Replicator Module contains methods to replicate a database
+    # The Replicator Module contains methods to replicate a database.
+    # The module assumes that the database to be replicated is the database currently
+    # set in the client; replicating another database requires a new database to be
+    # set beforehand or use of :replicate_dbs.
     #
     # Allows you to monitor a replication 
     def active_tasks(type="replication")
