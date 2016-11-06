@@ -86,6 +86,7 @@ module Cloudant
 
       @conn.query({url_path: "#{database}/_design/#{id}?rev=#{rev}", opts: doc, method: :delete})
     end
+    alias_method :delete_ddoc, :delete_design_doc
 
     # Id of the design doc in which the view (doc) will be held.
     # Views must be held in design docs; if no design doc matches the id

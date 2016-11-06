@@ -12,6 +12,8 @@ module Cloudant
         query_str  = build_attachment_query(args)
 
         @conn.query({url_path: query_str, opts: attachment, method: :put})
+      else
+        raise ArgumentError.new('document id is required')
       end
     end
     alias_method :update_attachment, :create_attachment

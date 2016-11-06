@@ -42,6 +42,16 @@ describe 'Cloudant::Attachment' do
       response = @cloudant.create_attachment(doc_params)
       expect(response).to eq(result)
     end
+
+    it 'should raise an error if no document id is given' do
+      doc_params = {
+        :name => "test_attachment",
+        :type => "text/html",
+        :path => "./spec/assets/test.html"
+      }
+      
+      expect { @cloudant.create_attachment(doc_params) }.to raise_error(ArgumentError)
+    end
   end
 
   context '#read_attachment' do
