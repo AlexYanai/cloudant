@@ -10,12 +10,12 @@ module Cloudant
     end
 
     def query(args)
-      base     = URI.parse("#{base_uri}#{args[:url_path]}")
-      http     = Net::HTTP.new(base.host, 443)
+      base         = URI.parse("#{base_uri}#{args[:url_path]}")
+      http         = Net::HTTP.new(base.host, 443)
       http.use_ssl = true
-      request  = new_net_http_crud(args[:method],base)
+      request      = new_net_http_crud(args[:method],base)
       
-      args[:opts] ? opts = args[:opts] : opts = { "Cookie" => cookies }
+      opts = args[:opts] ? args[:opts] : { "Cookie" => cookies }
 
       request.body            = JSON.generate(opts)
       request['Cookie']       = cookies
